@@ -1,10 +1,35 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Exceptions
 {
     class Program
     {
 		public static void Main()
+		{
+
+			string[] list = StringArrayGenerator.RepeatString(10_000, "abc");
+
+			Stopwatch watch1 = Stopwatch.StartNew();
+			int[] integerArray1 = ConvertToIntArray_Normal(list);
+			watch1.Stop();
+			Console.WriteLine($"(1) List converted in {watch1.ElapsedMilliseconds} ms");
+			Console.WriteLine(integerArray1.Length);
+			Console.WriteLine(integerArray1[344]);
+		}
+
+		private static int[] ConvertToIntArray_Normal(string[] stringArray)
+		{
+			int[] result = new int[stringArray.Length];
+			for (int i = 0; i < stringArray.Length; i++)
+			{
+				result[i] = ConversionHelper.ToInt(stringArray[i], 0);
+			}
+
+			return result;
+
+		}
+		private static void ExampleWithExceptionFilters()
 		{
 			try
 			{
@@ -41,6 +66,7 @@ namespace Exceptions
 				Console.WriteLine(otherEx.Message);
 				Console.WriteLine(otherEx.StackTrace);
 			}
+
 		}
 	}
 }
